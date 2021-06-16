@@ -17,13 +17,10 @@ int	main(void)
 		return (1);
 	ft_putint(pid);
 	write(1, "\n", 1);
+	signal(SIGUSR1, sighandler);
+	signal(SIGUSR2, sighandler);
 	while (1)
-	{
-		if (signal(SIGUSR1, sighandler) == SIG_ERR)
-			return (1);
-		if (signal(SIGUSR2, sighandler) == SIG_ERR)
-			return (1);
-	}
+		pause();
 	return (0);
 }
 

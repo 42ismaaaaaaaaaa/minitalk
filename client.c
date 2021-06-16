@@ -6,7 +6,7 @@
 /*   By: iouali <iouali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 13:47:32 by iouali            #+#    #+#             */
-/*   Updated: 2021/06/15 14:43:47 by iouali           ###   ########.fr       */
+/*   Updated: 2021/06/16 15:44:14 by iouali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void 	send_signal(pid_t pid, char c)
 		kill(pid, SIGUSR1);
 	if (c == '1')
 		kill(pid, SIGUSR2);
-	usleep(50);
+	usleep(90);
 }
 
 char	*char_to_bin(char c)
