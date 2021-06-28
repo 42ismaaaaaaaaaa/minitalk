@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iouali <iouali@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/28 16:18:37 by iouali            #+#    #+#             */
+/*   Updated: 2021/06/28 16:33:18 by iouali           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -26,7 +38,7 @@ int	main(void)
 
 void	sighandler(int signum)
 {
-	static char	bin[8];
+	static char	bin[9];
 	int			i;
 
 	i = 0;
