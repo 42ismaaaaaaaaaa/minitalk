@@ -6,7 +6,7 @@
 /*   By: iouali <iouali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 13:47:32 by iouali            #+#    #+#             */
-/*   Updated: 2021/06/16 15:44:14 by iouali           ###   ########.fr       */
+/*   Updated: 2021/06/29 16:06:12 by iouali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,39 @@
 #include <unistd.h>
 
 int		ft_atoi(const char *nptr);
-void	send_signal(pid_t pid, char c);
+void	send_signal(pid_t pid, int c);
 char	*char_to_bin(char c);
 
 int	main(int argc, char *argv[])
 {
 	int		i;
 	int		y;
-	char	*bin;
+	int		nb;
 
 	if (argc != 3)
 		return (1);
 	i = 0;
 	while (argv[2][i])
 	{
-		bin = char_to_bin(argv[2][i]);
 		y = 0;
-		while (bin[y])
+		while (y < 8)
 		{
-			send_signal(ft_atoi(argv[1]), bin[y]);
-			y++;
+			nb = (argv[2][i] >> y++) & 1;
+			usleep(90);
+			send_signal(ft_atoi(argv[1]), nb);
 		}
 		i++;
 	}
-	free(bin);
 	return (0);
 }
 
-void 	send_signal(pid_t pid, char c)
+void 	send_signal(pid_t pid, int c)
 {
-	if (c == '0')
+	if (c == 0)
 		kill(pid, SIGUSR1);
-	if (c == '1')
+	if (c == 1)
 		kill(pid, SIGUSR2);
-	usleep(90);
+	usleep(800);
 }
 
 char	*char_to_bin(char c)
@@ -75,6 +74,7 @@ char	*char_to_bin(char c)
 		i--;
 	}
 	bin[8] = '\0';
+	printf("%s\n", bin);
 	return (bin);
 }
 

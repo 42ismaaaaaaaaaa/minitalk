@@ -6,7 +6,7 @@
 /*   By: iouali <iouali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 16:18:37 by iouali            #+#    #+#             */
-/*   Updated: 2021/06/28 16:33:18 by iouali           ###   ########.fr       */
+/*   Updated: 2021/06/29 16:06:24 by iouali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,21 @@ int	main(void)
 
 void	sighandler(int signum)
 {
-	static char	bin[9];
-	int			i;
+	static char	c = 0;
+	static int	i = 0;
+	int			a;
 
-	i = 0;
-	while (bin[i])
-		i++;
 	if (signum == SIGUSR1)
-		bin[i] = '0';
+		a = 0;
 	else if (signum == SIGUSR2)
-		bin[i] = '1';
-	bin[i + 1] = '\0';
-	if (i == 7)
+		a = 1;
+
+	c |= (a << i++);
+	if (i > 7)
 	{
-		bin_to_char(bin);
-		bin[0] = '\0';
+		write(1, &c, 1);
+		i = 0;
+		c = 0;
 	}
 }
 
