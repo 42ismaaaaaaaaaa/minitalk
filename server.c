@@ -6,7 +6,7 @@
 /*   By: iouali <iouali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 16:18:37 by iouali            #+#    #+#             */
-/*   Updated: 2021/06/29 16:06:24 by iouali           ###   ########.fr       */
+/*   Updated: 2021/07/01 12:59:43 by iouali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <signal.h>
 
 void	sighandler(int signum);
-void	bin_to_char(char *bin);
-int		ft_pow(int power, int nb);
 void	ft_putint(int pid);
 
 int	main(void)
@@ -42,11 +40,13 @@ void	sighandler(int signum)
 	static int	i = 0;
 	int			a;
 
+	a = 2;
 	if (signum == SIGUSR1)
 		a = 0;
 	else if (signum == SIGUSR2)
 		a = 1;
-
+	if (a == 2)
+		return ;
 	c |= (a << i++);
 	if (i > 7)
 	{
@@ -54,41 +54,6 @@ void	sighandler(int signum)
 		i = 0;
 		c = 0;
 	}
-}
-
-int	ft_pow(int power, int nb)
-{
-	int	result;
-
-	result = 1;
-	while (power > 0)
-	{
-		result *= nb;
-		power--;
-	}
-	return (result);
-}
-
-void	bin_to_char(char *bin)
-{
-	int	i;
-	int	y;
-	int	num;
-	int	zero_one;
-
-	num = 0;
-	i = 7;
-	y = 0;
-	while (i >= 0)
-	{
-		zero_one = 0;
-		if (bin[y] == '1')
-			zero_one = 1;
-		num += (zero_one * ft_pow(i, 2));
-		i--;
-		y++;
-	}
-	write(1, &num, 1);
 }
 
 void	ft_putint(int pid)

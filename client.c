@@ -6,7 +6,7 @@
 /*   By: iouali <iouali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 13:47:32 by iouali            #+#    #+#             */
-/*   Updated: 2021/06/29 16:06:12 by iouali           ###   ########.fr       */
+/*   Updated: 2021/07/01 13:09:27 by iouali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include <unistd.h>
 
 int		ft_atoi(const char *nptr);
-void	send_signal(pid_t pid, int c);
-char	*char_to_bin(char c);
+int		send_signal(pid_t pid, int c);
 
 int	main(int argc, char *argv[])
 {
@@ -34,48 +33,39 @@ int	main(int argc, char *argv[])
 		while (y < 8)
 		{
 			nb = (argv[2][i] >> y++) & 1;
-			usleep(90);
-			send_signal(ft_atoi(argv[1]), nb);
+			usleep(80);
+			if (!(send_signal(ft_atoi(argv[1]), nb)))
+				return (1);
 		}
 		i++;
 	}
 	return (0);
 }
 
-void 	send_signal(pid_t pid, int c)
+int 	send_signal(pid_t pid, int c)
 {
-	if (c == 0)
-		kill(pid, SIGUSR1);
-	if (c == 1)
-		kill(pid, SIGUSR2);
-	usleep(800);
-}
-
-char	*char_to_bin(char c)
-{
-	char	*bin;
-	int		i;
-	int		div;
-	int		mod;
-
-	i = 7;
-	bin = malloc(9 * sizeof(char));
-	if (!bin)
-		return (NULL);
-	div = c;
-	while (i >= 0)
+	if (pid == 0)
 	{
-		mod = div % 2;
-		if (mod == 0)
-			bin[i] = '0';
-		else
-			bin[i] = '1';
-		div /= 2;
-		i--;
+		write(1, "WRONG PID\n", 11);
+		return (0);
 	}
-	bin[8] = '\0';
-	printf("%s\n", bin);
-	return (bin);
+	if (c == 0)
+	{
+		if ((kill(pid, SIGUSR1)) == -1)
+		{
+			write(1, "WRONG PID\n", 11);
+			return (0);
+		}
+	}
+	if (c == 1)
+	{
+		if ((kill(pid, SIGUSR2)) == -1)
+		{
+			write(1, "WRONG PID\n", 11);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 static int	is_space(char c)
