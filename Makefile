@@ -6,13 +6,13 @@
 #    By: iouali <iouali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/28 16:18:33 by iouali            #+#    #+#              #
-#    Updated: 2021/06/28 16:34:36 by iouali           ###   ########.fr        #
+#    Updated: 2021/07/01 16:48:48 by iouali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC      =   gcc
 
-CFLAGS  = -Wall -Wextra -Werror
+CFLAGS  = -Wall -Wextra -Werror -fsanitize=address
 
 NAME_1 = server
 NAME_O_SERVER = server.o
@@ -22,11 +22,15 @@ NAME_CLIENT = client.c
 NAME_O_CLIENT = client.o
 NAME_2 = client
 
+NAME = minitalk
+
 OBJS    =   ${SRCS:.c=.o}
 
 RM      = rm -f
 
-all:        ${NAME_1} ${NAME_2}
+all:        ${NAME}
+
+${NAME}:	${NAME_1} ${NAME_2}
 
 ${NAME_1}: 	${NAME_O_SERVER}
 			${CC} ${CFLAGS} -o ${NAME_1} ${NAME_O_SERVER}
